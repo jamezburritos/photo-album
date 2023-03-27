@@ -24,14 +24,15 @@
 
 <svelte:window bind:innerWidth />
 
-{#await images}
-	<!-- make this less garbage -->
-	<p>Loading...</p>
-{:then images}
-	<div
-		id="gallery"
-		style:columns
-	>
+<div
+	id="gallery"
+	style:columns
+>
+	{#await images}
+		{#each new Array(10) as _}
+			<figure class="gallery-item gallery-placeholder" />
+		{/each}
+	{:then images}
 		{#each images.files as file (file.$id)}
 			<img
 				class="gallery-item"
@@ -39,8 +40,8 @@
 				src={fetchImage(file.$id)}
 			/>
 		{/each}
-	</div>
-{/await}
+	{/await}
+</div>
 
 <style lang="scss">
 	#gallery {
@@ -52,6 +53,13 @@
 
 			object-fit: contain;
 			object-position: center;
+		}
+
+		.gallery-placeholder {
+			height: 350px;
+			margin: 0 0 8px 0;
+
+			background: linear-gradient(45deg, #bbb, #ccc);
 		}
 	}
 </style>

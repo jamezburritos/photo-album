@@ -8,7 +8,7 @@
 
 	let optionsVisible: boolean
 	const toggleUserOptions = () => {
-        optionsVisible = !optionsVisible 
+		optionsVisible = !optionsVisible
 	}
 </script>
 
@@ -17,7 +17,7 @@
 <nav>
 	<h1>photo album</h1>
 
-    <!-- FIXME: double toggle when clicked and options are visible -->
+	<!-- FIXME: double toggle when clicked and options are visible -->
 	<img
 		id="profile"
 		alt=""
