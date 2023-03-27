@@ -1,18 +1,20 @@
-import { Avatars } from "appwrite";
-import type { LayoutServerLoad } from "./$types";
+import { Avatars } from 'appwrite'
+import type { LayoutServerLoad } from './$types'
 
 type OutputType = {
-    avatar: string
+	name: string
+	avatar: string
 }
 
 export const load: LayoutServerLoad<OutputType> = ({ locals }) => {
-    const avatars = new Avatars(locals.client);
+	const avatars = new Avatars(locals.client)
 
-    if (!locals.user) {
-        return { avatar: "" }
-    }
+	if (!locals.user) {
+		return { name: '', avatar: '' }
+	}
 
-    return {
-        avatar: avatars.getInitials(locals.user.name, 40, 40).toString()
-    }
+	return {
+		name: locals.user.name,
+		avatar: avatars.getInitials(locals.user.name, 40, 40).toString()
+	}
 }

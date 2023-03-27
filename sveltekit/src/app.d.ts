@@ -1,11 +1,11 @@
-import type { Account, Client, Models } from 'appwrite';
+import type { Account, Client, Models } from 'appwrite'
 
 declare global {
 	namespace App {
 		interface Locals {
-			client: Client;
-			account: Account;
-            user: Models.Account;
+			client: Client
+			account: Account
+			user?: Models.Account
 		}
 
 		// interface Error {}
@@ -14,4 +14,4 @@ declare global {
 	}
 }
 
-export {};
+export {}
