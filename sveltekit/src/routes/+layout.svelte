@@ -6,7 +6,7 @@
 
 	export let data: LayoutData
 
-	let optionsVisible: boolean
+	let optionsVisible = false
 	const toggleUserOptions = () => {
 		optionsVisible = !optionsVisible
 	}
@@ -70,12 +70,8 @@
 		color: #555;
 	}
 
-	h1 {
-		font-size: 32px;
-		font-weight: 500;
-
-		cursor: default;
-		user-select: none;
+	slot {
+		z-index: -1;
 	}
 
 	nav {
@@ -84,6 +80,7 @@
 		left: 0;
 		right: 0;
 		padding: 24px 32px;
+		z-index: 1;
 
 		display: flex;
 		flex-direction: row;
@@ -91,6 +88,14 @@
 		align-items: center;
 
 		background: #efefef;
+
+		h1 {
+			font-size: 32px;
+			font-weight: 500;
+
+			cursor: default;
+			user-select: none;
+		}
 
 		#profile {
 			width: 40px;
