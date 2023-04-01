@@ -34,9 +34,7 @@
 			on:click_outside={toggleUserOptions}
 		>
 			<h3>{data.name}</h3>
-			<!-- TODO: add upload box -->
-			<!-- TODO: preferences page-->
-			<a href="/preferences">preferences</a>
+			<!-- TODO: upload modal -->
 			<button on:click={() => null}>upload</button>
 			<a href="/logout">sign out</a>
 		</div>
