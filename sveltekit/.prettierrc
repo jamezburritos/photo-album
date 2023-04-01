@@ -1,9 +1,10 @@
 {
 	"arrowParens": "always",
 	"bracketSameLine": false,
+	"bracketSpacing": true,
 	"overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }],
-	"pluginSearchDirs": ["."],
 	"plugins": ["prettier-plugin-svelte"],
+	"pluginSearchDirs": ["."],
 	"printWidth": 80,
 	"semi": false,
 	"singleAttributePerLine": true,
