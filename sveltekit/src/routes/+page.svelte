@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import { scale } from 'svelte/transition'
+	import { scale, fade } from 'svelte/transition'
 	import { quintOut } from 'svelte/easing'
 	import { Client, Query, Storage, type Models } from 'appwrite'
 
@@ -26,14 +26,15 @@
 	// selected image for modal
 	let selected: Models.File | null
 
-	// number of images in the bucket, used for batched loading
+	// batched image loading
+	const batchSize = 25
 	let total = 0
 	let loaded = 0
 
 	// fetch a batch of image data from the server, updating counts as needed
-	const fetchImageBatch = async (count: number): Promise<Models.File[]> => {
+	const fetchImageBatch = async (): Promise<Models.File[]> => {
 		const res = await storage.listFiles(data.bucketID, [
-			Query.limit(count),
+			Query.limit(batchSize),
 			Query.offset(loaded)
 		])
 
@@ -51,12 +52,12 @@
 	}
 
 	// batches of image urls
-	let batches = [fetchImageBatch(25)]
+	let batches = [fetchImageBatch()]
 
 	// load more images when user approaches the bottom of the page
 	$: {
 		if (windowHeight + scrollY >= galleryHeight * 0.8 && loaded !== total) {
-			batches = [...batches, fetchImageBatch(25)]
+			batches = [...batches, fetchImageBatch()]
 		}
 	}
 </script>
@@ -69,12 +70,12 @@
 
 <div
 	id="gallery"
-	style:grid-template-columns="repeat({columns}, 1fr)"
 	bind:offsetHeight={galleryHeight}
+	style:grid-template-columns="repeat({columns}, 1fr)"
 >
 	{#each batches as batch}
 		{#await batch}
-			{#each new Array(25) as _}
+			{#each new Array(batchSize) as _}
 				<figure class="gallery-item gallery-placeholder" />
 			{/each}
 		{:then images}
@@ -100,6 +101,7 @@
 			on:click={() => {
 				selected = null
 			}}
+			transition:fade={{ duration: 200 }}
 		>
 			<figure id="image-focused">
 				<img
@@ -114,6 +116,8 @@
 
 <style lang="scss">
 	#gallery {
+		margin-bottom: 8px;
+
 		display: grid;
 		/* columns set dynamically */
 		gap: 8px;
@@ -141,7 +145,7 @@
 		height: 100%;
 		z-index: 100;
 
-		background: rgba(#333, 0.5);
+		background: rgba(black, 0.6);
 
 		#image-focused {
 			width: 80%;
